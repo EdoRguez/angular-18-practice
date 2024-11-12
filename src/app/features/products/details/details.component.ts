@@ -1,4 +1,4 @@
-import { Component, inject, input, Signal } from '@angular/core';
+import { Component, inject, Input, input, OnInit, Signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ProductsService } from '@api/products.service';
 import { Product } from '@shared/models/product.interface';
@@ -10,11 +10,11 @@ import { Product } from '@shared/models/product.interface';
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
 })
-export default class DetailsComponent {
+export default class DetailsComponent implements OnInit {
   starsArray: number[] = new Array(5).fill(0);
 
-  // @Input({ alias: 'id' }) productId!: number;
-  productId = input<number>(0, { alias: 'id' });
+  // @Input({ alias: 'id' }) productId!: number; THIS IS KIND OF "OLD" VERSION
+  productId = input<number>(0, { alias: 'id' }); // THIS IS THE NEW VERSION
   product!: Signal<Product | undefined>;
   // cartStore = inject();
 
@@ -22,7 +22,7 @@ export default class DetailsComponent {
   private readonly _sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
-    // this.product = this.productsSvc.getProductById(this.productId());
+    this.product = this.productsSvc.getProductById(this.productId());
   }
 
   onAddToCart() {
